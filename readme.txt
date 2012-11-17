@@ -33,7 +33,7 @@ Allows you to use present your posts, pages, media or the Impress slides with th
 
 == Screenshots ==
 
-
+== Upgrade Notice == 
 
 == Changelog ==
 
