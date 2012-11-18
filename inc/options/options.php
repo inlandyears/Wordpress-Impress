@@ -441,48 +441,48 @@ class IMPRESS_Options{
 	*/
 	function admin_head(){
 
-global $IMPRESS_Options;
-$y = $IMPRESS_Options;
-$c = $y->get('type_color');
-$grad_arr = $y->get('color_gradient');
+		global $IMPRESS_Options;
+		$y = $IMPRESS_Options;
+		$c = $y->get('type_color');
+		$grad_arr = $y->get('color_gradient');
 
-$type = $y->get('typeface');
+		$type = $y->get('typeface');
 
-$f = $grad_arr[from];
-$t = $grad_arr[to];
-$s = $grad_arr[type];
+		$f = $grad_arr[from];
+		$t = $grad_arr[to];
+		$s = $grad_arr[type];
 
-$subs = substr($type, 0, strrpos($type, ":"));
-if($type) {
-    echo '<link href="http://fonts.googleapis.com/css?family='.$subs.'" rel="stylesheet" type="text/css">';
-}
+		$subs = substr($type, 0, strrpos($type, ":"));
+		if($type) {
+		    echo '<link href="http://fonts.googleapis.com/css?family='.$subs.'" rel="stylesheet" type="text/css">';
+		}
 
-echo '<style>'."\n";
-echo '#canvas {'."\n";
-echo "font-family: '".$subs."';"."\n";
-echo 'color: '.$c.';'."\n";
+		echo '<style>'."\n";
+		echo '#canvas {'."\n";
+		echo "font-family: '".$subs."';"."\n";
+		echo 'color: '.$c.';'."\n";
 
-if($s == 1) {
-    echo 'background: -moz-linear-gradient(top,  '.$f.' 0%, '.$t.');'."\n";
-    echo 'background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,'.$f.'), color-stop(100%, '.$t.'));'."\n";
-    echo 'background: -webkit-linear-gradient(top, '.$f.' 0%, '.$t.' 100%);'."\n";
-    echo 'background: -o-linear-gradient(top, '.$f.' 0%, '.$t.' 100%);'."\n";
-    echo 'background: -ms-linear-gradient(top, '.$f.' 0%, '.$t.' 100%);'."\n";
-    echo 'background: linear-gradient(to bottom, '.$f.' 0%, '.$t.' 100%);'."\n";
-    echo 'filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="'.$f.'", endColorstr="'.$t.'",GradientType=0 );'."\n";
-}else{
-    echo 'background: -moz-radial-gradient(center, ellipse cover,  '.$f.' 0%, '.$t.');';
-    echo 'background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,'.$f.'), color-stop(100%, '.$t.'));';
-    echo 'background: -webkit-radial-gradient(center, ellipse cover,  '.$f.' 0%, '.$t.' 100%);';
-    echo 'background: -o-radial-gradient(center, ellipse cover,  '.$f.' 0%, '.$t.' 100%);';
-    echo 'background: -ms-radial-gradient(center, ellipse cover,  '.$f.' 0%, '.$t.' 100%);';
-    echo 'background: radial-gradient(ellipse at center,  '.$f.' 0%, '.$t.' 100%);';
-    echo 'filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="'.$f.'", endColorstr="'.$t.'",GradientType=1 );';
+		if($s == 1) {
+		    echo 'background: -moz-linear-gradient(top,  '.$f.' 0%, '.$t.');'."\n";
+		    echo 'background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,'.$f.'), color-stop(100%, '.$t.'));'."\n";
+		    echo 'background: -webkit-linear-gradient(top, '.$f.' 0%, '.$t.' 100%);'."\n";
+		    echo 'background: -o-linear-gradient(top, '.$f.' 0%, '.$t.' 100%);'."\n";
+		    echo 'background: -ms-linear-gradient(top, '.$f.' 0%, '.$t.' 100%);'."\n";
+		    echo 'background: linear-gradient(to bottom, '.$f.' 0%, '.$t.' 100%);'."\n";
+		    echo 'filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="'.$f.'", endColorstr="'.$t.'",GradientType=0 );'."\n";
+		}else{
+		    echo 'background: -moz-radial-gradient(center, ellipse cover,  '.$f.' 0%, '.$t.');';
+		    echo 'background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,'.$f.'), color-stop(100%, '.$t.'));';
+		    echo 'background: -webkit-radial-gradient(center, ellipse cover,  '.$f.' 0%, '.$t.' 100%);';
+		    echo 'background: -o-radial-gradient(center, ellipse cover,  '.$f.' 0%, '.$t.' 100%);';
+		    echo 'background: -ms-radial-gradient(center, ellipse cover,  '.$f.' 0%, '.$t.' 100%);';
+		    echo 'background: radial-gradient(ellipse at center,  '.$f.' 0%, '.$t.' 100%);';
+		    echo 'filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="'.$f.'", endColorstr="'.$t.'",GradientType=1 );';
 
 
-}
-    echo '}'."\n";
-	echo '</style>'."\n";
+		}
+		    echo '}'."\n";
+			echo '</style>'."\n";
 
 		
 		do_action('impress-opts-admin-head-'.$this->args['opt_name'], $this);
@@ -776,6 +776,14 @@ echo '<form method="post" action="options.php" enctype="multipart/form-data" id=
 				echo '<input type="hidden" id="last_tab" name="'.$this->args['opt_name'].'[last_tab]" value="'.$this->options['last_tab'].'" />';
 				
 				echo '<div id="impress-opts-header">';
+					global $IMPRESS_Options;
+					$y = $IMPRESS_Options;
+					$page = $y->get('pages_select');
+				
+					if ($page) {
+						echo '<a href="'.get_page_link($page).'" class="button-secondary" target="_blank">Preview</a>';
+					}
+
 					submit_button('', 'primary', '', false);
 				echo '</div>';
 

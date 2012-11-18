@@ -168,7 +168,9 @@ $sections[] = array(
 						//'sub_desc' => __('Choose to show your Pages, Posts or other Custom Post Types', 'nhp-opts'),
 						'desc' => __('Choose to show your Pages, Posts or other Custom Post Types.', 'nhp-opts'),
 						//'args' => array()//uses get_post_types
+						'std' => 'impress',
 						),
+					/*
 					array(
 						'id' => 'cats_select',
 						'type' => 'cats_select',
@@ -177,6 +179,7 @@ $sections[] = array(
 						'desc' => __('Choose a Post category if you like.', 'nhp-opts'),
 						'args' => array('number' => '10')//uses get_categories
 						),
+						*/
 					array(
 						'id' => 'pages_select',
 						'type' => 'pages_select',
@@ -201,7 +204,7 @@ $sections[] = array(
 						'sub_desc' => __('Increment in X-Axis distance apart from other sides.', 'impress-opts'),
 						'desc' => __('"-1000" comes from the left where "1000" comes from the right.', 'impress-opts'),
 						'validate' => 'numeric',
-						'std' => '0',
+						'std' => '1000',
 						'class' => 'xdis'
 						),
 					array(
