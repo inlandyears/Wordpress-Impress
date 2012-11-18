@@ -33,7 +33,7 @@ if($type) {
 }
 
 echo '<style>'."\n";
-echo '#wrap {'."\n";
+echo 'body {'."\n";
 echo 'color: '.$c.';'."\n";
 
 if($s == 1) {
