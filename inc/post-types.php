@@ -1,7 +1,13 @@
 <?php
 
-// Custom Post Types
+/**
+ * Create custom post type
+ */
+
+
 add_action( 'init', 'create_post_type' );
+
+
 function create_post_type() {
 	register_post_type( 'impress',
 		array(
@@ -24,6 +30,7 @@ function create_post_type() {
 		'menu_icon' => IMPRESS_URL . '/img/impress.png',
 		'public' => true,
 		'show_ui' => true,
+		'capability_type' => 'post',
 		'publicly_queryable' => true,
 		'exclude_from_search' => false,
 		'has_archive' => true,
@@ -35,6 +42,29 @@ function create_post_type() {
 }
 
 
+/** Custom order function */
+
+function set_custom_post_types_admin_order($wp_query) {  
+  if (is_admin()) {  
+  
+    // Get the post type from the query  
+    $post_type = $wp_query->query['post_type'];  
+  
+    if ( $post_type == 'impress') {  
+  
+      // 'orderby' value can be any column name  
+      $wp_query->set('orderby', 'menu_order');  
+  
+      // 'order' value can be ASC or DESC  
+      $wp_query->set('order', 'ASC');  
+    }  
+  }  
+}
+
+
+/** Filter before posts for ordering */
+
+add_filter('pre_get_posts', 'set_custom_post_types_admin_order');  
 
 
 ?>

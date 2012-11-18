@@ -1,23 +1,38 @@
+<?php
+
+/**
+ * Main fullscreen template
+ */
+
+?>
 
 <div id="impress">
 
 <?php
+
+/** Get some Options via global */
 global $IMPRESS_Options;
 $y = $IMPRESS_Options;
 $_posttype = $y->get('post_type_select');
 
+
+/** Setup some presets */
 $i = 0;
 $j = 1;
 $row = 0;
 $spc = 1200;
-$xd = $y->get('xdis') ? $y->get('xdis') : 1000;
+
+
+/** Setup some presets */
+$xd = $y->get('xdis') ? $y->get('xdis') : 0;
 $yd = $y->get('ydis') ? $y->get('ydis') : 0;
 $zd = $y->get('zdis') ? $y->get('zdis') : 0;
 $xr = $y->get('xrot') ? $y->get('xrot') : 0;
 $yr = $y->get('yrot') ? $y->get('yrot') : 0;
 $zr = $y->get('zrot') ? $y->get('zrot') : 0;
-$counter = 100;
+$counter = 20;
 
+/** What post type are we showing? */
 if(!$_posttype){
     $_posttype = 'impress';
     $args = array( 
@@ -39,37 +54,40 @@ if(!$_posttype){
         'posts_per_page' => $counter 
     );
 }
+
+/** query */
 $loop = new WP_Query( $args );
 
+/** Want to show media? We can */
 if ($_posttype == 'attachment') {
-
     $attachments = get_posts($args);
     if ($attachments) {
         foreach ($attachments as $attach) {
 /*
-            $xpos = $i*$xd;
-            $ypos = $i*$yd;
-            $zpos = $i*$zd;
-            $xrot = $i*$xr;
-            $yrot = $i*$yr;
-            $zrot = $i*$zr;
-   */         
-            /* GRID  */
+$xpos = $i*$xd;
+$ypos = $i*$yd;
+$zpos = $i*$zd;
+$xrot = $i*$xr;
+$yrot = $i*$yr;
+$zrot = $i*$zr;
+*/
 
-                if($i % 2 == 0){
-                    $row++;
-                    $xpos = $spc;
-                    $j = 1;
-                }else{
-                    $xpos = $j*$spc;
-                }
-                $ypos = $row*$spc;
-                $zpos = 0;
-                $xrot = 0;
-                $yrot = 0;
-                $zrot = 0;
+/** GRID */
 
-                $j++; 
+            if($i % 2 == 0){
+                $row++;
+                $xpos = $spc;
+                $j = 1;
+            }else{
+                $xpos = $j*$spc;
+            }
+            $ypos = $row*$spc;
+            $zpos = 0;
+            $xrot = 0;
+            $yrot = 0;
+            $zrot = 0;
+
+            $j++;
 
             $scale = 1;
 
@@ -85,7 +103,6 @@ if ($_posttype == 'attachment') {
             $i++;
         }
     }
-
 }else{
 
     while ( $loop->have_posts() ) : $loop->the_post();
@@ -112,19 +129,20 @@ if ($_posttype == 'attachment') {
             $xrot = $i*$xr;
             $yrot = $i*$yr;
             $zrot = $i*$zr;
-            
-            /* GRID
-                if($i % 2 == 0){
-                    $row++;
-                    $xpos = $spc;
-                    $j = 1;
-                }else{
-                    $xpos = $j*$spc;
-                }
-                $ypos = $row*$spc;
 
-                $j++; 
-            */
+/** GRID */
+/*
+if($i % 2 == 0){
+    $row++;
+    $xpos = $spc;
+    $j = 1;
+}else{
+    $xpos = $j*$spc;
+}
+$ypos = $row*$spc;
+
+$j++; 
+*/
             $scale = 1;
         }
 
@@ -143,8 +161,6 @@ if ($_posttype == 'attachment') {
         foreach ( $slides as $slide ) {
             $slideclass = $slide;
         }
-
-
 
         echo '  <div id="'.$slug.'" class="step '.$slideclass.'" data-x="'.$xpos.'" data-y="'.$ypos.'" data-z="'.$zpos.'" data-scale="'.$scale.'" data-rotate-x="'.$xrot.'"  data-rotate-y="'.$yrot.'"  data-rotate-z="'.$zrot.'">'."\n";
         if($showtitle == 1){

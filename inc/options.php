@@ -53,13 +53,6 @@ function change_framework_args($args){
 //add_filter('impress-opts-args-twenty_eleven', 'change_framework_args');
 
 
-
-
-
-
-
-
-
 /*
  * This is the meat of creating the optons page
  *

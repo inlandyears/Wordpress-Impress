@@ -1,15 +1,26 @@
-<?php 
+<?php
+
+/**
+ * Main fullscreen template
+ */
+
+/** Get some Options via global */
 global $IMPRESS_Options;
 $y = $IMPRESS_Options;
+
+/** Set options */
 $c = $y->get('type_color');
 $grad_arr = $y->get('color_gradient');
 $header = $y->get('header');
 $footer = $y->get('footer2');
 $type = $y->get('typeface');
 
+/** Gradient Color Array */
 $f = $grad_arr['from'];
 $t = $grad_arr['to'];
 $s = $grad_arr['type'];
+
+/** Start HTML */
 ?><!doctype html>
 <html lang="en">
 <head>
@@ -26,7 +37,8 @@ $s = $grad_arr['type'];
     <link rel="shortcut icon" href="favicon.png" />
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
 <?php 
-    
+
+/** Google Fonts ----NEEDS WORK */
 $subs = substr($type, 0, strrpos($type, ":"));
 if($type) {
     echo '<link href="http://fonts.googleapis.com/css?family='.$subs.'" rel="stylesheet" type="text/css">';

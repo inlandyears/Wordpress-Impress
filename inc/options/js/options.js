@@ -90,9 +90,7 @@ jQuery(document).ready(function(){
 		jQuery('#impress-opts-export-link-value').toggle('fade');
 	});
 	
-	
 
-	
 	
 	
 });

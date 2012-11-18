@@ -364,8 +364,8 @@
             document.documentElement.style.height = "100%";
             
             css(body, {
-                //height: "100%",
-                //overflow: "hidden"
+                height: "100%",
+                overflow: "hidden"
             });
             
             var rootStyles = {

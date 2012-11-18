@@ -19,6 +19,9 @@
  * Alt.: You also can make prefix empty to disable it
  */
 // Better has an underscore as last sign
+
+require_once IMPRESS_INC_DIR . 'meta-box/meta-box.php'; // Meta Boxes on Post Types
+
 $prefix = 'IMPRESS_';
 
 global $meta_boxes;
