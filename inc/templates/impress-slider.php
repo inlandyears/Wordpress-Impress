@@ -14,6 +14,8 @@
 global $IMPRESS_Options;
 $y = $IMPRESS_Options;
 $_posttype = $y->get('post_type_select');
+$effect = $y->get('effect');
+
 
 
 /** Setup some presets */
@@ -32,18 +34,24 @@ $yr = $y->get('yrot') ? $y->get('yrot') : 0;
 $zr = $y->get('zrot') ? $y->get('zrot') : 0;
 $counter = 20;
 
+/** preset the stage vars */
+$stage_width = 2000;
+$stage_height = 2000;
+
 /** What post type are we showing? */
 if(!$_posttype){
     $_posttype = 'impress';
     $args = array( 
         'post_type' => $_posttype, 
-        'posts_per_page' => $counter 
+        'posts_per_page' => $counter,
+        'orderby' => 'menu_order',
+        'order' => 'ASC'
     );
 }elseif($_posttype == 'attachment'){
     $args = array( 
-        'post_type' => 'attachment', 
-        'orderby' => 'menu_order', 
-        'order' => 'ASC', 
+        'post_type' => 'attachment',
+        'orderby' => 'menu_order',
+        'order' => 'ASC',
         'post_mime_type' => 'image', 
         'post_status' => null, 
         'post_parent' => null 
@@ -51,7 +59,9 @@ if(!$_posttype){
 }else{
     $args = array( 
         'post_type' => $_posttype, 
-        'posts_per_page' => $counter 
+        'posts_per_page' => $counter,
+        'orderby' => 'menu_order',
+        'order' => 'ASC'
     );
 }
 
@@ -162,21 +172,63 @@ $j++;
             $slideclass = $slide;
         }
 
-        echo '  <div id="'.$slug.'" class="step '.$slideclass.'" data-x="'.$xpos.'" data-y="'.$ypos.'" data-z="'.$zpos.'" data-scale="'.$scale.'" data-rotate-x="'.$xrot.'"  data-rotate-y="'.$yrot.'"  data-rotate-z="'.$zrot.'">'."\n";
+        remove_filter ('the_content','wpautop');
+        $content = apply_filters('the_content', get_the_content());
+
+        //$content = wp_kses($content, $IMPRESS_Options->field['allowed_html']);
+        
+
+        echo '<div id="i-'.$slug.'" class="step '.$slideclass.'" data-x="'.$xpos.'" data-y="'.$ypos.'" data-z="'.$zpos.'" data-scale="'.$scale.'" data-rotate-x="'.$xrot.'"  data-rotate-y="'.$yrot.'"  data-rotate-z="'.$zrot.'">'."\n";
         if($showtitle == 1){
-            echo '      <h1>'.get_the_title().'</h1>'."\n";
+            echo '<h1>'.get_the_title().'</h1>'."\n";
         }
-        echo '      <p>',get_the_content().'</p>'."\n";
-        echo '  </div>'."\n";
+        echo $content ."\n";
+        echo '</div>'."\n";
         echo ''."\n";
 
 
 
         $i++;
+
+        $stage_width = ($xpos + $spc)*2;
+        $stage_height = ($ypos + $spc)*4;
     endwhile;
 }
 $slideclass = '';
 
-    ?>
+/** Load the background */
+if($effect != 'none') {
+    switch($effect) {
+        case 'bokeh':
+            $stage = array('bokeh-L1.png','bokeh-L2.png');
+            break;
+        case 'plaid':
+            $stage = array('plaid.png');
+            break;
+        case 'boxes':
+            $stage = array('boxes.png', 'boxes2.png');
+            break;
+        case 'hexagons':
+            $stage = array('hexagon-01.png','hexagon-02.png');
+            break;
+        case 'stars':
+            $stage = array('stars-1.png','stars-2.png');
+            break;
+        case 'star-color':
+            $stage = array('stars-color-1.png','stars-color-2.png');
+            break;
+    }
+    $idx = 0;
+    shuffle($stage);
+    foreach($stage as $layer) {
+        $zpos = ($idx*-2000)-3000;
+        $xpos = 0;
+        $ypos = 0;
+        $scale = ($idx*2)+1;
+        echo '<div class="stage" data-x="'.$xpos.'" data-y="'.$ypos.'" data-z="'.$zpos.'" data-scale="'.$scale.'" data-rotate-x="0"  data-rotate-y="0"  data-rotate-z="0" style="background:url('.IMPRESS_URL.'img/'.$layer.');width:'.$stage_width.'px;height:'.$stage_height.'px;">&nbsp;</div>'."\n";
+        $idx++;
+    }
+}
 
+    ?>
 </div>

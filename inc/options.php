@@ -67,6 +67,8 @@ global $allowedposttags;
 
 $args = array();
 
+$tabs = array();
+
 //Set it to dev mode to view the class settings/info in the form - default is false
 $args['dev_mode'] = false;
 
@@ -263,8 +265,16 @@ $sections[] = array(
 $sections[] = array(
 				'icon' => IMPRESS_OPTIONS_URL.'img/glyphicons/glyphicons_023_cogwheels.png',
 				'title' => __('Design', 'impress-opts'),
-				'desc' => __('<div id="canvas"><h1>Checkout Your Design :-)</h1><p>This is what your presentation will look like! Gradient, Text Color, Typefaces and All.</p></div>', 'impress-opts'),
 				'fields' => array(
+					array(
+						'id' => 'screen',
+						'type' => 'screen',
+						'title' => __('Color Gradient Option', 'impress-opts'), 
+						//'sub_desc' => __('Only color validation can be done on this field type', 'impress-opts'),
+						'desc' => __('<br />Choose two colors and a select a gradient style for your background.', 'impress-opts'),
+						'options' => array('1' => 'Linear','2' => 'Radius'),
+						'std' => array('from' => '#575757', 'to' => '#303030', 'type' => '0')
+						),
 					array(
 						'id' => 'type_color',
 						'type' => 'color',
@@ -283,12 +293,20 @@ $sections[] = array(
 						'std' => array('from' => '#575757', 'to' => '#303030', 'type' => '0')
 						),
 					array(
+						'id' => 'effect',
+						'type' => 'select',
+						'title' => __('Select Effect', 'nhp-opts'), 
+						'desc' => __('Choose a background parallax effect.', 'nhp-opts'),
+						'options' => array('none' => 'None', 'bokeh' => 'Bokeh', 'plaid' => 'Plaid', 'boxes' => 'Boxes', 'hexagons' => 'Hexagons', 'stars' => 'Stars', 'star-color' => 'Stars Color'),//Must provide key => value pairs for select options
+						'std' => 'none'
+						),
+					array(
 						'id' => 'typeface',
 						'type' => 'google_webfonts',//doesnt need to be called for callback fields
 						'title' => __('Choose Typeface', 'impress-opts'), 
 						//'sub_desc' => __('', 'impress-opts'),
 						'desc' => __('<br />Select a Google Web Font for your typeface.<br /><br /><br /><br /><br /><br />', 'impress-opts'),
-						)					
+						)			
 					)
 				);
 

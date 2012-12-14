@@ -448,18 +448,23 @@ class IMPRESS_Options{
 
 		$type = $y->get('typeface');
 
-		$f = $grad_arr[from];
-		$t = $grad_arr[to];
-		$s = $grad_arr[type];
+		$f = $grad_arr['from'];
+		$t = $grad_arr['to'];
+		$s = $grad_arr['type'];
 
-		$subs = substr($type, 0, strrpos($type, ":"));
-		if($type) {
-		    echo '<link href="http://fonts.googleapis.com/css?family='.$subs.'" rel="stylesheet" type="text/css">';
+		$subs = explode(":", $type);
+		if($subs) {
+		    echo '<link href="http://fonts.googleapis.com/css?family='.$type.'" rel="stylesheet" type="text/css">';
 		}
 
 		echo '<style>'."\n";
 		echo '#canvas {'."\n";
-		echo "font-family: '".$subs."';"."\n";
+		echo 'font-family: "'.$subs[0].'";'."\n";
+		if (is_int($subs[1])) {
+			echo 'font-weight: '.$subs[1].';'."\n";
+		}else{
+			echo 'font-style: '.$subs[1].';'."\n";
+		}
 		echo 'color: '.$c.';'."\n";
 
 		if($s == 1) {
@@ -491,7 +496,7 @@ class IMPRESS_Options{
 	
 	
 	function admin_footer_text($footer_text){
-		return $this->args['footer_credit'];
+		//return $this->args['footer_credit'];
 	}//function
 	
 	

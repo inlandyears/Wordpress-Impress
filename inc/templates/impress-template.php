@@ -27,49 +27,57 @@ $s = $grad_arr['type'];
     <meta charset="utf-8" />
     <meta name="viewport" content="width=1024" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title></title>
     
-    <meta name="description" content="" />
-    <meta name="author" content="" />
+    <meta name="description" content="Impress.js for Wordpress" />
+    <meta name="author" content="http://hanusek.com/impress" />
 
     <link href="<?php echo IMPRESS_CSS_URL; ?>style.css" rel="stylesheet" />
+    <link href="<?php echo IMPRESS_CSS_URL; ?>vendor/bootstrap.min.css" rel="stylesheet" />
     
     <link rel="shortcut icon" href="favicon.png" />
-    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <link rel="apple-touch-icon" href="<?php echo IMPRESS_URL; ?>img/icons/Icon-72@2x.png" />
 <?php 
 
 /** Google Fonts ----NEEDS WORK */
-$subs = substr($type, 0, strrpos($type, ":"));
-if($type) {
-    echo '<link href="http://fonts.googleapis.com/css?family='.$subs.'" rel="stylesheet" type="text/css">';
+$subs = explode(":", $type);
+$type = urlencode ( $type );
+if($subs) {
+    echo '<link href="http://fonts.googleapis.com/css?family='.$type.'" rel="stylesheet" type="text/css">'."\n";
 }
 
 echo '<style>'."\n";
+echo 'a {'."\n";
+echo 'color: '.$c.';'."\n";
+echo '}'."\n";
 echo 'body {'."\n";
 echo 'color: '.$c.';'."\n";
 
+
 if($s == 1) {
-    echo 'background: -moz-linear-gradient(top,  '.$f.' 0%, '.$t.');'."\n";
-    echo 'background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,'.$f.'), color-stop(100%, '.$t.'));'."\n";
-    echo 'background: -webkit-linear-gradient(top, '.$f.' 0%, '.$t.' 100%);'."\n";
-    echo 'background: -o-linear-gradient(top, '.$f.' 0%, '.$t.' 100%);'."\n";
-    echo 'background: -ms-linear-gradient(top, '.$f.' 0%, '.$t.' 100%);'."\n";
-    echo 'background: linear-gradient(to bottom, '.$f.' 0%, '.$t.' 100%);'."\n";
-    echo 'filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="'.$f.'", endColorstr="'.$t.'",GradientType=0 );'."\n";
+    echo 'background: '.$t.';'."\n";
+    echo 'background: '.PREFIX.'linear-gradient(top, '.$f.' 0%, '.$t.' 100%);'."\n";
+    echo 'background: '.PREFIX.'gradient(linear, left top, left bottom, color-stop(0%,'.$f.'), color-stop(100%, '.$t.'));'."\n";
+    echo 'background: linear-gradient(to bottom,  '.$f.' 0%, '.$t.' 100%);'."\n";
 }else{
-    echo 'background: -moz-radial-gradient(center, ellipse cover,  '.$f.' 0%, '.$t.');'."\n";
-    echo 'background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,'.$f.'), color-stop(100%, '.$t.'));'."\n";
-    echo 'background: -webkit-radial-gradient(center, ellipse cover,  '.$f.' 0%, '.$t.' 100%);'."\n";
-    echo 'background: -o-radial-gradient(center, ellipse cover,  '.$f.' 0%, '.$t.' 100%);'."\n";
-    echo 'background: -ms-radial-gradient(center, ellipse cover,  '.$f.' 0%, '.$t.' 100%);'."\n";
+    echo 'background: '.$t.';'."\n";
+    echo 'background: '.PREFIX.'radial-gradient(center, ellipse cover,  '.$f.' 0%, '.$t.' 100%);'."\n";
+    echo 'background: '.PREFIX.'gradient(radial, center center, 0px, center center, 100%, color-stop(0%,'.$f.'), color-stop(100%, '.$t.'));'."\n";
     echo 'background: radial-gradient(ellipse at center,  '.$f.' 0%, '.$t.' 100%);'."\n";
-    echo 'filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="'.$f.'", endColorstr="'.$t.'",GradientType=1 );'."\n";
+}
+
+echo '}'."\n";
+echo '#impress, b {'."\n";
+echo 'font-family: "'.$subs[0].'";'."\n";
+if (is_int($subs[1])) {
+    echo 'font-weight: '.$subs[1].';'."\n";
+}else{
+    echo 'font-style: '.$subs[1].';'."\n";
 }
 echo '}'."\n";
-echo '#impress {'."\n";
-echo "font-family: '".$subs."';"."\n";
-echo '}'."\n";
 echo '</style>'."\n";
+do_action('impress_head');
 ?>
 
 

@@ -249,6 +249,9 @@
         
         // array of step elements
         var steps = null;
+
+        // array of step elements
+        var stage = null;
         
         // configuration options
         var config = null;
@@ -371,7 +374,7 @@
             var rootStyles = {
                 position: "absolute",
                 transformOrigin: "top left",
-                transition: "all 0s ease-in-out",
+                transition: "all 0s cubic-bezier(0.770, 0.000, 0.175, 1.000)",
                 transformStyle: "preserve-3d"
             };
             
@@ -389,6 +392,10 @@
             // get and init steps
             steps = $$(".step", root);
             steps.forEach( initStep );
+
+            // get and init steps
+            stage = $$(".stage", root);
+            stage.forEach( initStep );
             
             // set a default initial state of the canvas
             currentState = {

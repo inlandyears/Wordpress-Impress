@@ -39,7 +39,7 @@ function impress_order_page() {
       <tbody data-post-type="product">
       <?php while( $products->have_posts() ) : $products->the_post(); ?>
         <tr id="post-<?php the_ID(); ?>">
-          <td class="column-order"><img src="<?php echo get_stylesheet_directory_uri() . '/images/move-icon.png'; ?>" title="" alt="Move Icon" width="30" height="30" class="" /></td>
+          <td class="column-order"><img src="<?php echo IMPRESS_URL . 'img/move-icon.png'; ?>" title="" alt="Move Icon" width="30" height="30" class="" /></td>
           <td class="column-thumbnail"><?php the_post_thumbnail( 'thumbnail' ); ?></td>
           <td class="column-title"><strong><?php the_title(); ?></strong><div class="excerpt"><?php the_excerpt(); ?></div></td>
         </tr>
@@ -57,7 +57,7 @@ function impress_order_page() {
 
   <?php else: ?>
 
-    <p>No products found, why not <a href="post-new.php?post_type=product">create one?</a></p>
+    <p>No blocks found, why not <a href="post-new.php?post_type=product">create one?</a></p>
 
   <?php endif; ?>
   <?php wp_reset_postdata(); // Don't forget to reset again! ?>
