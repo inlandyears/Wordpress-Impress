@@ -34,7 +34,7 @@ class IMPRESS_Options_pages_select extends IMPRESS_Options{
 		
 		$args = wp_parse_args($this->field['args'], array());
 		
-		$pages = get_pages($args); 
+		$pages = get_pages(); 
 		foreach ( $pages as $page ) {
 			echo '<option value="'.$page->ID.'"'.selected($this->value, $page->ID, false).'>'.$page->post_title.'</option>';
 		}

@@ -1,0 +1,13 @@
+.slide {
+	border: 1px solid #CCC;
+	padding: 10px;
+}
+.slideTitle {
+	padding: 3px 8px;
+	font-size: 1.7em;
+	line-height: 100%;
+	width: 100%;
+	outline: 0;
+	margin-top: 10px;
+	margin-bottom:25px;
+}

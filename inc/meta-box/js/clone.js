@@ -12,17 +12,20 @@ jQuery( document ).ready( function( $ )
 		$input = $clone.find( ':input' );
 
 		// Reset value
-		$input.val( '' );
+		//$input.val( '' );
 
-		// Get the field name, and increment
-		name = $input.attr( 'name' ).replace( /\[(\d+)\]/, function( match, p1 )
-		{
-			return '[' + ( parseInt( p1 ) + 1 ) + ']';
-		} );
+        for (var i = 0; i < $input.length; ++i) {
+            // Get the field name, and increment
+            if( $($input[i]).attr( 'name' ) ) {
+                name = $($input[i]).attr( 'name' ).replace( /\[(\d+)\]/, function( match, p1 )
+                {
+                    return '[' + ( parseInt( p1 ) + 1 ) + ']';
+                } );
 
-		// Update the "name" attribute
-		$input.attr( 'name', name );
-
+                // Update the "name" attribute
+                $($input[i]).attr( 'name', name );
+            }
+        }
 		// Toggle remove buttons
 		toggle_remove_buttons( $input );
 

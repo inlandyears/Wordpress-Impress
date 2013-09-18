@@ -51,6 +51,7 @@ if ( ! class_exists( 'RW_Meta_Box' ) )
 			if ( ! is_admin() )
 				return;
 
+
 			// Assign meta box values to local variables and add it's missed values
 			$this->meta_box   = self::normalize( $meta_box );
 			$this->fields     = &$this->meta_box['fields'];
@@ -311,7 +312,7 @@ if ( ! class_exists( 'RW_Meta_Box' ) )
 		 */
 		static function begin_html( $html, $meta, $field )
 		{
-			if ( empty( $field['name'] ) )
+			if ( empty( $field['name'] ) Or 'screen' === $field['type'] Or 'slide' === $field['type'])
 				return '<div class="rwmb-input">';
 
 			return sprintf(

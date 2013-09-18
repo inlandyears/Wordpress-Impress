@@ -1,4 +1,117 @@
 <?php
+function Print_impress_fileds($cnt, $p = null) {
+	if ($p === null){
+	    $a = $b = $c = '';
+	}else{
+	    $a = $p['n'];
+	    $b = $p['d'];
+	    $c = $p['p'];
+	}
+	return sprintf(
+	   '<li  style="border: 1px solid #000;">
+			<label>Nr :</label>
+			<input type="text" name="impress_data[%s][n]" size="10" value="%s"/>
+
+			<label>Description :</label>
+			<input type="text" name="impress_data[%s][d]" size="50" value="%s"/>
+
+			<label>Price :</label>
+			<input type="text" name="impress_data[%s][p]" size="20" value="%s"/>
+			<span class="remove">Remove</span>
+		</li>',
+		$cnt, $a,
+		$cnt, $b,
+		$cnt, $c
+	);
+}
+
+
+//add custom field - price
+//add_action("add_meta_boxes", "object_init");
+
+function object_init(){
+  add_meta_box("impress_meta_id", "Slides","impress_meta", "impress", "normal", "low");
+
+}
+
+function impress_meta(){
+ global $post;
+
+  $data = get_post_meta($post->ID,"impress_data",true);
+  echo '<div>';
+  echo '<ul id="impress_items">';
+  $c = 0;
+    if (count($data) > 0){
+        foreach((array)$data as $p ){
+            if (isset($p['p']) || isset($p['d'])|| isset($p['n'])){
+                echo Print_impress_fileds($c,$p);
+                $c = $c +1;
+            }
+        }
+
+    }
+    echo '</ul>';
+
+    ?>
+        <span id="here"></span>
+        <span class="add"><?php echo __('Add Impress Data'); ?></span>
+        <script>
+            var $ =jQuery.noConflict();
+                $(document).ready(function() {
+                var count = <?php echo $c; ?>;
+                $(".add").click(function() {
+                    count = count + 1;
+                    $('#impress_items').append('<li><label>Nr :</label><input type="text" name="impress_data[' + count + '][n]" size="10" value=""/><label>Description :</label><input type="text" name="impress_data[' + count + '][d]" size="50" value=""/><label>Price :</label><input type="text" name="impress_data[' + count + '][p]" size="20" value=""/><span class="remove">Remove</span></li>');
+                   //$('#impress_items').append('<? echo implode('',explode("\n",Print_price_fileds('count'))); ?>'.replace(/count/g, count));
+                    return false;
+                });
+                $(".remove").live('click', function() {
+                    $(this).parent().remove();
+                });
+            });
+        </script>
+        <style>#impress_items {list-style: none;}</style>
+    <?php
+    echo '</div>';
+}
+
+
+//Save product price
+//add_action('save_post', 'save_detailss');
+
+function save_detailss($post_id){ 
+global $post;
+
+
+    // to prevent metadata or custom fields from disappearing... 
+    if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) 
+    return $post_id; 
+    // OK, we're authenticated: we need to find and save the data
+    if (isset($_POST['impress_data'])){
+        $data = $_POST['impress_data'];
+        update_post_meta($post_id,'impress_data',$data);
+    }else{
+        delete_post_meta($post_id,'impress_data');
+    }
+} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**
  * Registering meta boxes
  *
@@ -28,6 +141,73 @@ global $meta_boxes;
 
 
 $meta_boxes = array();
+
+// 2nd meta box
+$meta_boxes[] = array(
+	// Meta box id, UNIQUE per meta box. Optional since 4.1.5
+	'id' => 'impressscreen',
+
+	// Meta box title - Will appear at the drag and drop handle bar. Required.
+	'title' => 'Preview',
+
+	// Post types, accept custom post types as well - DEFAULT is array('post'). Optional.
+	'pages' => array( 'impress'),
+
+	// Where the meta box appear: normal (default), advanced, side. Optional.
+	'context' => 'normal',
+
+	// Order of meta box: high (default), low. Optional.
+	'priority' => 'high',
+
+	'fields' => array(
+		// SELECT BOX
+		// TEXTAREA
+		array(
+			'name' => 'Screen',
+			'desc' => '',
+			'id'   => "{$prefix}screen",
+			'type' => 'screen',
+			'cols' => '20',
+			'rows' => '3',
+		),
+	)
+);
+
+$pages = get_pages(); 
+foreach ( $pages as $page ) {
+	$arr[$page->post_name] = $page->post_title;
+}
+
+// 2nd meta box
+$meta_boxes[] = array(
+	// Meta box id, UNIQUE per meta box. Optional since 4.1.5
+	'id' => 'impresssettings',
+
+	// Meta box title - Will appear at the drag and drop handle bar. Required.
+	'title' => 'Settings',
+
+	// Post types, accept custom post types as well - DEFAULT is array('post'). Optional.
+	'pages' => array( 'impress'),
+
+	// Where the meta box appear: normal (default), advanced, side. Optional.
+	'context' => 'normal',
+
+	// Order of meta box: high (default), low. Optional.
+	'priority' => 'high',
+
+	'fields' => array(
+		// SELECT BOX
+		array(
+			'name'     => 'Select a Page',
+			'id'       => "{$prefix}selectpage",
+			'type'     => 'select',
+			// Array of 'value' => 'Label' pairs for select box
+			'options'  => $arr,
+			// Select multiple values, optional. Default is false.
+			'multiple' => false,
+		),
+	)
+);
 
 // 1st meta box
 $meta_boxes[] = array(
@@ -144,21 +324,151 @@ $meta_boxes[] = array(
 );
 
 // 2nd meta box
+$meta_boxes = array();
+
 $meta_boxes[] = array(
-	'title' => 'Advanced Fields',
+    // Meta box id, UNIQUE per meta box. Optional since 4.1.5
+    'id' => 'impress_design',
+
+    // Meta box title - Will appear at the drag and drop handle bar. Required.
+    'title' => 'Design',
+
+    // Post types, accept custom post types as well - DEFAULT is array('post'). Optional.
+    'pages' => array( 'impress'),
+
+    // Where the meta box appear: normal (default), advanced, side. Optional.
+    'context' => 'normal',
+
+    // Order of meta box: high (default), low. Optional.
+    'priority' => 'high',
+
+    'fields' => array(
+        // SELECT BOX
+
+
+
+
+        array(
+            'name'     => 'Type Color',
+            'id'       => "{$prefix}type_color",
+            'type'     => 'color',
+            'std'      => '#000000'
+           // 'clone' => true
+        ),
+        array(
+            'name'     => 'Gradient From',
+            'id'       => "{$prefix}color_gradient_from",
+            'type'     => 'color',
+            'std'      => '#575757'
+
+        ),
+        array(
+            'name'     => 'Gradient To',
+            'id'       => "{$prefix}color_gradient_from",
+            'type'     => 'color',
+            'std'      => '#303030'
+
+        ),
+
+        array(
+            'name'     => 'Gradient Type',
+            'id'       => "{$prefix}color_gradient_type",
+            'type'     => 'select',
+            'std'      => '1',
+            'options'   => array(1=>'Linear',2=>'Radius')
+
+        ),
+
+    )
+);
+
+
+
+$meta_boxes[] = array(
+	// Meta box id, UNIQUE per meta box. Optional since 4.1.5
+	'id' => 'impressslide',
+
+	// Meta box title - Will appear at the drag and drop handle bar. Required.
+	'title' => 'Slides',
+
+	// Post types, accept custom post types as well - DEFAULT is array('post'). Optional.
+	'pages' => array( 'impress'),
+
+	// Where the meta box appear: normal (default), advanced, side. Optional.
+	'context' => 'normal',
+
+	// Order of meta box: high (default), low. Optional.
+	'priority' => 'high',
 
 	'fields' => array(
-		// NUMBER
-		array(
-			'name' => 'Number',
-			'id'   => "{$prefix}number2",
-			'type' => 'number',
+		// SELECT BOX
 
-			'min'  => 0,
-			'step' => 5,
-		)
+
+
+
+        array(
+			'name'     => 'Select a Page',
+			'id'       => "{$prefix}slide",
+			'type'     => 'impress',
+			// Array of 'value' => 'Label' pairs for select box
+		//	'options'  => array(
+		//			'option1' => 'value1',
+		//			'option2' => 'value2'
+		//		),
+          //  'options' => array('value1'=>'label1','value2'=>'label2'),
+          //  'multiple'   => 'true',
+			'clone' => true
+		),
+
+
+
 	)
 );
+
+
+$meta_boxes[] = array(
+    // Meta box id, UNIQUE per meta box. Optional since 4.1.5
+    'id' => 'impressslide2',
+
+    // Meta box title - Will appear at the drag and drop handle bar. Required.
+    'title' => 'Slides2',
+
+    // Post types, accept custom post types as well - DEFAULT is array('post'). Optional.
+    'pages' => array( 'impress'),
+
+    // Where the meta box appear: normal (default), advanced, side. Optional.
+    'context' => 'normal',
+
+    // Order of meta box: high (default), low. Optional.
+    'priority' => 'high',
+
+    'fields' => array(
+        // SELECT BOX
+
+
+
+
+        array(
+            'name'     => 'Select a Page',
+            'id'       => "{$prefix}slide2",
+            'type'     => 'text',
+            // Array of 'value' => 'Label' pairs for select box
+            //	'options'  => array(
+            //			'option1' => 'value1',
+            //			'option2' => 'value2'
+            //		),
+            //  'options' => array('value1'=>'label1','value2'=>'label2'),
+            //  'multiple'   => 'true',
+            'clone' => true
+        ),
+
+
+
+    )
+);
+
+
+
 
 /********************* META BOX REGISTERING ***********************/
 

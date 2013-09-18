@@ -75,6 +75,9 @@ The browser will crash if it goes any more than that.
 
 == Changelog ==
 
+= 0.1.4 =
+Added in inline animation.
+
 = 0.1.3 =
 Fixed bugs, simplified code, tested more thoroughly.
 

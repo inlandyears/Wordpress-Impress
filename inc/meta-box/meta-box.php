@@ -46,4 +46,28 @@ if ( is_admin() )
 
 	// Main file
 	require_once RWMB_CLASSES_DIR . 'meta-box.php';
+
+
+
+        add_action('admin_print_scripts', 'my_impress_scripts');
+        add_action('admin_print_styles', 'my_impress_styles');
+
 }
+
+
+
+
+
+function my_impress_scripts() {
+
+    wp_enqueue_script('media-upload');
+    wp_enqueue_script('thickbox');
+    wp_register_script('my-upload', plugin_dir_url( __FILE__ ) .'js/impress.js', array('jquery','media-upload','thickbox'));
+    wp_enqueue_script('my-upload');
+}
+
+function my_impress_styles() {
+
+    wp_enqueue_style('thickbox');
+}
+

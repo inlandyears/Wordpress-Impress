@@ -13,20 +13,20 @@ function create_post_type() {
 		array(
 			'labels' => array(
 				'name' => __( 'Impress' ),
-				'singular_name' => __( 'Impress Block' ),
+				'singular_name' => __( 'Impress Presentation' ),
 				'add_new' => __( 'Add New' ),
-				'add_new_item' => __( 'Add New Block' ),
+				'add_new_item' => __( 'Add New Presentation' ),
 				'edit' => __( 'Edit' ),
-				'edit_item' => __( 'Edit Block' ),
-				'new_item' => __( 'New Block' ),
-				'view' => __( 'View Block' ),
-				'view_item' => __( 'View Block' ),
-				'search_items' => __( 'Search Blocks' ),
-				'not_found' => __( 'No Blocks found' ),
-				'not_found_in_trash' => __( 'No Blocks found in Trash' ),
-				'parent' => __( 'Parent Block' )
+				'edit_item' => __( 'Edit Presentation' ),
+				'new_item' => __( 'New Presentation' ),
+				'view' => __( 'View Presentation' ),
+				'view_item' => __( 'View Presentation' ),
+				'search_items' => __( 'Search Presentations' ),
+				'not_found' => __( 'No Presentations found' ),
+				'not_found_in_trash' => __( 'No Presentations found in Trash' ),
+				'parent' => __( 'Parent Presentation' )
 			),
-		'description' => __( 'A Impress Block is a type of content that is the most wonderful content in the world. There are no alternatives that match how insanely creative and beautiful it is.' ),
+		'description' => __( 'A Impress Presentation is a type of content that is the most wonderful content in the world. There are no alternatives that match how insanely creative and beautiful it is.' ),
 		'menu_icon' => IMPRESS_URL . '/img/impress.png',
 		'public' => true,
 		'show_ui' => true,
@@ -36,7 +36,7 @@ function create_post_type() {
 		'has_archive' => true,
 		'menu_position' => 11,
 		'show_in_nav_menus' => true,
-		'supports' => array( 'title', 'editor', 'thumbnail' ),
+		'supports' => array( 'title' ),
 		)
 	);
 }

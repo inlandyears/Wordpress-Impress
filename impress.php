@@ -3,7 +3,7 @@
  * Plugin Name: imPress
  * Plugin URI: http://www.hanusek.com/impress
  * Description: Create amazing presentations with Wordpress and Impress.js.
- * Version: 0.1.4
+ * Version: 0.1.6
  * Author: Hanusek
  * Author URI: http://www.hanusek.com
  * License: GPL2+
@@ -77,7 +77,5 @@ require_once IMPRESS_INC_DIR . 'custom-edit.php';       // Customize the edit.ph
 require_once IMPRESS_INC_DIR . 'sort-order.php';        // Add sort order post types
 require_once IMPRESS_INC_DIR . 'scripts.php';           // Include for js and css
 
-
-?>
 
 ?>
