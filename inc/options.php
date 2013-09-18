@@ -63,7 +63,7 @@ function change_framework_args($args){
  */
 
 function setup_framework_options(){
-global $allowedposttags;
+global $allowedposttags,$google_api_key;
 
 $args = array();
 
@@ -73,7 +73,7 @@ $tabs = array();
 $args['dev_mode'] = false;
 
 //google api key MUST BE DEFINED IF YOU WANT TO USE GOOGLE WEBFONTS
-$args['google_api_key'] = 'AIzaSyAcstCTO3Ua9ro64TbVH9JdX3Piz8Kcn3A';
+$args['google_api_key'] = GOOGLE_API_KEY;
 
 //Remove the default stylesheet? make sure you enqueue another one all the page will look whack!
 //$args['stylesheet_override'] = true;
@@ -359,26 +359,55 @@ function my_custom_field($field, $value){
  *
  */
 function validate_callback_function($field, $value, $existing_value){
-	
-	$error = false;
-	$value =  'just testing';
-	/*
-	do your validation
-	
-	if(something){
-		$value = $value;
-	}elseif(somthing else){
-		$error = true;
-		$value = $existing_value;
-		$field['msg'] = 'your custom error message';
-	}
-	*/
-	
-	$return['value'] = $value;
-	if($error == true){
-		$return['error'] = $field;
-	}
-	return $return;
-	
+
+$error = false;
+$value =  'just testing';
+/*
+do your validation
+
+if(something){
+    $value = $value;
+}elseif(somthing else){
+    $error = true;
+    $value = $existing_value;
+    $field['msg'] = 'your custom error message';
+}
+*/
+
+$return['value'] = $value;
+if($error == true){
+    $return['error'] = $field;
+}
+return $return;
+
 }//function
+
+
+
+
+/*
+ *
+ * get google web fonts array
+ *
+ */
+function get_google_webfonts_array($api_key){
+
+    $webfonts = array();
+
+    $fonts = get_transient('impress-opts-google-webfonts');
+    if(!is_array(json_decode($fonts))){
+
+        $fonts = wp_remote_retrieve_body(wp_remote_get('https://www.googleapis.com/webfonts/v1/webfonts?key='.$api_key));
+        set_transient('impress-opts-google-webfonts', $fonts, 60 * 60 * 24);
+
+    }
+    $webfonts = json_decode($fonts);
+
+    return $webfonts;
+
+
+}//function
+
+
+
 ?>

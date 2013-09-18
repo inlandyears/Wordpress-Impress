@@ -326,6 +326,16 @@ $meta_boxes[] = array(
 // 2nd meta box
 $meta_boxes = array();
 
+$webfonts_options = array();
+$webfonts =  get_google_webfonts_array(GOOGLE_API_KEY);
+foreach($webfonts->items as $cut){
+
+    foreach($cut->variants as $variant){
+
+        $webfonts_options[$cut->family.':'.$variant] = $cut->family.' - '.$variant;
+      }
+}
+
 $meta_boxes[] = array(
     // Meta box id, UNIQUE per meta box. Optional since 4.1.5
     'id' => 'impress_design',
@@ -355,6 +365,7 @@ $meta_boxes[] = array(
             'std'      => '#000000'
            // 'clone' => true
         ),
+        array( 'type'     => 'divider'),
         array(
             'name'     => 'Gradient From',
             'id'       => "{$prefix}color_gradient_from",
@@ -370,12 +381,35 @@ $meta_boxes[] = array(
 
         ),
 
+
+
         array(
             'name'     => 'Gradient Type',
             'id'       => "{$prefix}color_gradient_type",
             'type'     => 'select',
             'std'      => '1',
+            'desc'     => 'Choose two colors and a select a gradient style for your background.',
             'options'   => array(1=>'Linear',2=>'Radius')
+
+        ),
+        array( 'type'     => 'divider'),
+        array(
+            'name'     => 'Select Effect',
+            'id'       => "{$prefix}effect",
+            'type'     => 'select',
+            'std'      => 'bokeh',
+            'desc'     => 'Choose a background parallax effect.',
+            'options'   => array(   "none"=>"None","bokeh"=>"Bokeh","plaid"=>"Plaid","boxes"=>"Boxes","hexagons"=>"Hexagons","stars"=>"Stars","star-color"=>"Stars Color")
+
+        ),
+
+        array(
+            'name'     => 'Choose Typeface',
+            'id'       => "{$prefix}typeface",
+            'type'     => 'select',
+            'std'      => '',
+            'desc'     => 'Select a Google Web Font for your typeface.',
+            'options'   => $webfonts_options
 
         ),
 

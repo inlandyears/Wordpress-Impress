@@ -14,6 +14,7 @@
 
 defined( 'ABSPATH' ) || exit;
 define( 'IMPRESS_VER', '0.1.2' );
+define( 'GOOGLE_API_KEY', 'AIzaSyAcstCTO3Ua9ro64TbVH9JdX3Piz8Kcn3A' );
 
 
 /** Define plugin URLs and Paths, for fast enqueuing scripts and styles */
