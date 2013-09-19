@@ -357,7 +357,7 @@ $meta_boxes[] = array(
 
 
 
-
+        array( 'type'     => 'screen'),
         array(
             'name'     => 'Type Color',
             'id'       => "{$prefix}type_color",
@@ -411,6 +411,22 @@ $meta_boxes[] = array(
             'desc'     => 'Select a Google Web Font for your typeface.',
             'options'   => $webfonts_options
 
+        ),
+
+        array(
+            'name'     => 'Header',
+            'id'       => "{$prefix}header",
+            'type'     => 'textarea',
+            'std'      => '',
+            'desc'     => 'Custom HTML Allowed',
+        ),
+
+        array(
+            'name'     => 'Footer',
+            'id'       => "{$prefix}footer",
+            'type'     => 'textarea',
+            'std'      => '',
+            'desc'     => 'Custom HTML Allowed',
         ),
 
     )

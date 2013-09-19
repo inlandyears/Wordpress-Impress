@@ -15,7 +15,7 @@ function impress_template( $page_template ) {
     $y = $IMPRESS_Options;
     $page = $y->get('pages_select');
 
-    if($page) {
+    if($page && 0) {
         if ( is_page($page) ) {
             $page_template = IMPRESS_INC_DIR . 'templates/impress-template.php';
         }
