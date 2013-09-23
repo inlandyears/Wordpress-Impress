@@ -13,8 +13,8 @@
 /** Get some Options via global */
 global $IMPRESS_Options;
 $y = $IMPRESS_Options;
-$_posttype = $y->get('post_type_select');
-$effect = $y->get('effect');
+
+$effect = $impress_page_options['IMPRESS_effect'][0];
 
 
 
@@ -26,111 +26,44 @@ $spc = 1200;
 
 
 /** Setup some presets */
-$xd = $y->get('xdis') ? $y->get('xdis') : 0;
-$yd = $y->get('ydis') ? $y->get('ydis') : 0;
-$zd = $y->get('zdis') ? $y->get('zdis') : 0;
-$xr = $y->get('xrot') ? $y->get('xrot') : 0;
-$yr = $y->get('yrot') ? $y->get('yrot') : 0;
-$zr = $y->get('zrot') ? $y->get('zrot') : 0;
+$xd = $impress_page_options['IMPRESS_xpos'][0] ? $impress_page_options['IMPRESS_xpos'][0] : 0;
+$yd = $impress_page_options['IMPRESS_ypos'][0] ? $impress_page_options['IMPRESS_ypos'][0] : 0;
+$zd = $impress_page_options['IMPRESS_zpos'][0] ? $impress_page_options['IMPRESS_zpos'][0] : 0;
+$xr =  $impress_page_options['IMPRESS_xrotate'][0] ?  $impress_page_options['IMPRESS_xrotate'][0] : 0;
+$yr =  $impress_page_options['IMPRESS_yrotate'][0] ?  $impress_page_options['IMPRESS_yrotate'][0] : 0;
+$zr =  $impress_page_options['IMPRESS_zrotate'][0] ?  $impress_page_options['IMPRESS_zrotate'][0] : 0;
 $counter = 20;
 
 /** preset the stage vars */
 $stage_width = 2000;
 $stage_height = 2000;
-
-/** What post type are we showing? */
-if(!$_posttype){
-    $_posttype = 'impress';
-    $args = array( 
-        'post_type' => $_posttype, 
-        'posts_per_page' => $counter,
-        'orderby' => 'menu_order',
-        'order' => 'ASC'
-    );
-}elseif($_posttype == 'attachment'){
-    $args = array( 
-        'post_type' => 'attachment',
-        'orderby' => 'menu_order',
-        'order' => 'ASC',
-        'post_mime_type' => 'image', 
-        'post_status' => null, 
-        'post_parent' => null 
-    );
-}else{
-    $args = array( 
-        'post_type' => $_posttype, 
-        'posts_per_page' => $counter,
-        'orderby' => 'menu_order',
-        'order' => 'ASC'
-    );
-}
+$encoded_slides = $impress_page_options['IMPRESS_slide'][0];
+$slides = unserialize( $encoded_slides );
 
 /** query */
-$loop = new WP_Query( $args );
+//$loop = new WP_Query( $args );
 
-/** Want to show media? We can */
-if ($_posttype == 'attachment') {
-    $attachments = get_posts($args);
-    if ($attachments) {
-        foreach ($attachments as $attach) {
-/*
-$xpos = $i*$xd;
-$ypos = $i*$yd;
-$zpos = $i*$zd;
-$xrot = $i*$xr;
-$yrot = $i*$yr;
-$zrot = $i*$zr;
-*/
 
-/** GRID */
+foreach($slides as $key=>$slide) {
 
-            if($i % 2 == 0){
-                $row++;
-                $xpos = $spc;
-                $j = 1;
-            }else{
-                $xpos = $j*$spc;
-            }
-            $ypos = $row*$spc;
-            $zpos = 0;
-            $xrot = 0;
-            $yrot = 0;
-            $zrot = 0;
-
-            $j++;
-
-            $scale = 1;
-
-            echo '  <div id="attachment-'.$i.'" class="step img" data-x="'.$xpos.'" data-y="'.$ypos.'" data-z="'.$zpos.'" data-scale="'.$scale.'" data-rotate-x="'.$xrot.'"  data-rotate-y="'.$yrot.'"  data-rotate-z="'.$zrot.'">'."\n";
-
-            $image = wp_get_attachment_url( $attach->ID , false );
-            echo '<img src="'.$image.'" title="'.get_the_title().'" />'."\n";
-            $counter--;
-
-            echo '  </div>'."\n";
-            echo ''."\n";
-
-            $i++;
-        }
-    }
-}else{
-
-    while ( $loop->have_posts() ) : $loop->the_post();
         $_id = get_the_ID();
+    //$impress_page_options
+
 
         $slug = basename(get_permalink());
-        $slides = get_post_meta( $_id, 'IMPRESS_slide', false );
-        $slideclass = get_post_meta( $_id, 'IMPRESS_class', true );
-        $override = get_post_meta( $_id, 'IMPRESS_override', true );
-        $showtitle = get_post_meta( $_id, 'IMPRESS_title', true );
+        //$slides = get_post_meta( $_id, 'IMPRESS_slide', false );
+        $slideclass = $slide['custom_class'];// get_post_meta( $_id, 'IMPRESS_class', true );
+        $override =  $slide['override']; //get_post_meta( $_id, 'IMPRESS_override', true );
+        $showtitle = $impress_page_options['IMPRESS_title'][0];
+        $custom_title = $slide['content_title']; // get_post_meta( $_id, 'IMPRESS_title', true );
         if($override == 1) {
-            $xpos = get_post_meta( $_id, 'IMPRESS_xpos', true );
-            $ypos = get_post_meta( $_id, 'IMPRESS_ypos', true );
-            $zpos = get_post_meta( $_id, 'IMPRESS_zpos', true );
-            $xrot = get_post_meta( $_id, 'IMPRESS_xrotate', true );
-            $yrot = get_post_meta( $_id, 'IMPRESS_yrotate', true );
-            $zrot = get_post_meta( $_id, 'IMPRESS_zrotate', true );
-            $scale = get_post_meta( $_id, 'IMPRESS_scale', true );
+            $xpos = $slide['xpos'] ? $slide['xpos'] : 0; // get_post_meta( $_id, 'IMPRESS_xpos', true );
+            $ypos = $slide['ypos'] ? $slide['ypos'] : 0;
+            $zpos = $slide['zpos'] ? $slide['zpos'] : 0;
+            $xrot = $slide['xrotate'] ? $slide['xrotate'] : 0;
+            $yrot = $slide['yrotate'] ? $slide['yrotate'] : 0;
+            $zrot = $slide['zrotate'] ? $slide['zrotate'] : 0;
+            $scale = $slide['scale'] ? $slide['scale'] : 1;
         } else {
 
             $xpos = $i*$xd;
@@ -139,23 +72,10 @@ $zrot = $i*$zr;
             $xrot = $i*$xr;
             $yrot = $i*$yr;
             $zrot = $i*$zr;
-
-/** GRID */
-/*
-if($i % 2 == 0){
-    $row++;
-    $xpos = $spc;
-    $j = 1;
-}else{
-    $xpos = $j*$spc;
-}
-$ypos = $row*$spc;
-
-$j++; 
-*/
             $scale = 1;
         }
 
+    /*
         $spdata = Array(
             'IMPRESS_xpos' => $xpos,
             'IMPRESS_ypos' => $ypos,
@@ -165,22 +85,24 @@ $j++;
             'IMPRESS_zrotate' => $zrot,
             'IMPRESS_scale' => $scale
         );
+
         foreach ( $spdata as $k => $v ) {
             update_post_meta( $_id, $k, $v );
         }
+
         foreach ( $slides as $slide ) {
             $slideclass = $slide;
         }
-
-        remove_filter ('the_content','wpautop');
-        $content = apply_filters('the_content', get_the_content());
-
+     */
+      //  remove_filter ('the_content','wpautop');
+      //  $content = apply_filters('the_content', get_the_content());
+        $content = $slide['content'];
         //$content = wp_kses($content, $IMPRESS_Options->field['allowed_html']);
         
 
-        echo '<div id="i-'.$slug.'" class="step '.$slideclass.'" data-x="'.$xpos.'" data-y="'.$ypos.'" data-z="'.$zpos.'" data-scale="'.$scale.'" data-rotate-x="'.$xrot.'"  data-rotate-y="'.$yrot.'"  data-rotate-z="'.$zrot.'">'."\n";
+        echo '<div id="slide-'.$i.'" class="step '.$slideclass.'" data-x="'.$xpos.'" data-y="'.$ypos.'" data-z="'.$zpos.'" data-scale="'.$scale.'" data-rotate-x="'.$xrot.'"  data-rotate-y="'.$yrot.'"  data-rotate-z="'.$zrot.'">'."\n";
         if($showtitle == 1){
-            echo '<h1>'.get_the_title().'</h1>'."\n";
+            echo '<h1>'.$custom_title.'</h1>'."\n";
         }
         echo $content ."\n";
         echo '</div>'."\n";
@@ -192,8 +114,9 @@ $j++;
 
         $stage_width = ($xpos + $spc)*2;
         $stage_height = ($ypos + $spc)*4;
-    endwhile;
+
 }
+
 $slideclass = '';
 
 /** Load the background */

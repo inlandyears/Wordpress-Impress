@@ -109,7 +109,35 @@ class IMPRESS_Options{
 	function get($opt_name, $default = null){
 		return (!empty($this->options[$opt_name])) ? $this->options[$opt_name] : $default;
 	}//function
-	
+
+
+    function getPageOptions($post_id) {
+        $impress_values = array();
+        $meta_values = get_post_meta( $post_id );
+        foreach($meta_values as $key=>$value) {
+            if(substr($key, 0, 8) == 'IMPRESS_') {
+                $impress_values[$key] = $value;
+            }
+        }
+        return $impress_values;
+    }
+
+
+    function getImpressPostId($page_id) {
+
+        global $wpdb;
+        $meta_values = $wpdb->get_results( $wpdb->prepare("SELECT post_id,meta_value FROM $wpdb->postmeta WHERE meta_key = 'IMPRESS_pages_select'" ) );
+
+
+
+        foreach($meta_values as $key=>$values) {
+            if($values->meta_value == $page_id) {
+                return $values->post_id;
+            }
+        }
+        return false;
+    }
+
 	/**
 	 * ->set(); This is used to set an arbitrary option in the options array
 	 *

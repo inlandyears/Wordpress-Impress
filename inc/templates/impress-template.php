@@ -15,6 +15,9 @@ $header = $y->get('header');
 $footer = $y->get('footer2');
 $type = $y->get('typeface');
 
+$impress_page_options = $y->getPageOptions( $IMPRESS_Options->current_post_id );
+
+
 /** Gradient Color Array */
 $f = $grad_arr['from'];
 $t = $grad_arr['to'];

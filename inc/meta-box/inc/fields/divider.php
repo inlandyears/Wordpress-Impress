@@ -13,7 +13,7 @@ if ( ! class_exists( 'RWMB_Divider_Field' ) )
          */
         static function admin_enqueue_scripts()
         {
-            wp_enqueue_style( 'rwmb-divider', RWMB_CSS_URL . 'divider.css', array(), RWMB_VER );
+            //wp_enqueue_style( 'rwmb-divider', RWMB_CSS_URL . 'divider.css', array(), RWMB_VER );
         }
 
         /**

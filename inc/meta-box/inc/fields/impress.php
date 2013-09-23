@@ -22,6 +22,7 @@ if ( ! class_exists( 'RWMB_Impress_Field' ) )
             $html .= '<div style="clear:both"></div>';
             $html .= '<hr>';
 
+           /*
             $html .= '<label>Select Content Type</label>';
             $field['options'] = array('post'=>'Posts','page'=>'Pages','attachment'=>'Media');
             $html .= RWMB_Select_Field::html($html, array($meta['post_type_select']), self::refactor_field( $field, 'post_type_select' ));
@@ -45,8 +46,19 @@ if ( ! class_exists( 'RWMB_Impress_Field' ) )
             $html .='<input class="upload_image_button" id="' . $media_field['field_name']. '_button" type="button" value="Add Media" />';
             $html .= '<div style="clear:both"></div>';
            // $html .= RWMB_Text_Field::html($html, $meta['first'], $temp_field);
+*/
 
+            $html .= '<label>Title</label>';
+            $html .= RWMB_Text_Field::html($html, $meta['content_title'], self::refactor_field( $field, 'content_title' ));
+            $html .= '<div style="clear:both"></div>';
 
+            $html .= '<label>Content</label>';
+            $html .= RWMB_Textarea_Field::html($html, $meta['content'], self::refactor_field( $field, 'content' ));
+            $html .= '<div style="clear:both"></div>';
+
+            $html .= '<label>Custom Class</label>';
+            $html .= RWMB_Text_Field::html($html, $meta['custom_class'], self::refactor_field( $field, 'custom_class' ));
+            $html .= '<div style="clear:both"></div>';
 
 
             $html .= '<label>Overide Spatial Settings</label>';
