@@ -20,7 +20,7 @@ if ( ! class_exists( 'RWMB_Impress_Field' ) )
 		static function html( $html, $meta, $field )
 		{
             $html .= '<div style="clear:both"></div>';
-            $html .= '<hr>';
+
 
            /*
             $html .= '<label>Select Content Type</label>';
@@ -104,32 +104,12 @@ if ( ! class_exists( 'RWMB_Impress_Field' ) )
             $html .= '<label>Z Rotate</label>';
             $html .= RWMB_Number_Field::html($html, $meta['zrotate'], self::refactor_field( $field, 'zrotate' ));
             $html .= '<div style="clear:both"></div>';
-
-
-
-            return $html;
-
-            return sprintf(
-				'<input type="text" class="rwmb-text" name="%s[first]" id="%s[first]" value="%s" size="%s" />
-				 <input type="text" class="rwmb-text" name="%s[second]" id="%s[second]" value="%s" size="%s" />
-				',
-				$field['field_name'],
-				$field['id'],
-				$meta['first'],
-				$field['size'],
-
-                $field['field_name'],
-                $field['id'],
-                $meta['second'],
-                $field['size']
-			);
-
-
-
-
+            $html .= '<hr>';
 
 
             return $html;
+
+
 		}
 
         static function refactor_field( $field,$variable_name )

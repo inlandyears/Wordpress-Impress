@@ -8,20 +8,24 @@
 global $IMPRESS_Options;
 $y = $IMPRESS_Options;
 
-/** Set options */
-$c = $y->get('type_color');
-$grad_arr = $y->get('color_gradient');
-$header = $y->get('header');
-$footer = $y->get('footer2');
-$type = $y->get('typeface');
-
+/** get presentation options by postid of the page **/
 $impress_page_options = $y->getPageOptions( $IMPRESS_Options->current_post_id );
 
 
+/** Set options */
+$c = $impress_page_options['IMPRESS_type_color'][0];
+
+$header = $impress_page_options['IMPRESS_header'][0];
+$footer = $impress_page_options['IMPRESS_footer'][0];
+$type =   $impress_page_options['IMPRESS_typeface'][0];
+
+
+
+
 /** Gradient Color Array */
-$f = $grad_arr['from'];
-$t = $grad_arr['to'];
-$s = $grad_arr['type'];
+$f = $impress_page_options['IMPRESS_color_gradient_from'][0];
+$t = $impress_page_options['IMPRESS_color_gradient_to'][0];
+$s = $impress_page_options['IMPRESS_color_gradient_type'][0];
 
 /** Start HTML */
 ?><!doctype html>

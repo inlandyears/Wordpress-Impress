@@ -30,8 +30,9 @@ if ( ! class_exists( 'RWMB_Screen_Field' ) )
 		{
 
 			global $post;
+            $page_id = get_post_meta($post->ID,'IMPRESS_pages_select',true);
 
-			return '<iframe src="'. get_permalink($post->ID) .'" width="100%" height="1" id="screen_frame" frameborder="0"></iframe>';
+            return '<iframe src="'. get_permalink($page_id) .'" width="100%" height="1" id="screen_frame" frameborder="0"></iframe>';
 		}
 	}
 }
