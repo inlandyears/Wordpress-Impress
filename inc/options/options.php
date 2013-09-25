@@ -76,13 +76,13 @@ class IMPRESS_Options{
 		$this->extra_tabs = apply_filters('impress-opts-extra-tabs-'.$this->args['opt_name'], $extra_tabs);
 		
 		//set option with defaults
-		add_action('init', array(&$this, '_set_default_options'));
+		//add_action('init', array(&$this, '_set_default_options'));
 		
 		//options page
-		add_action('admin_menu', array(&$this, '_options_page'));
+		//add_action('admin_menu', array(&$this, '_options_page'));
 		
 		//register setting
-		add_action('admin_init', array(&$this, '_register_setting'));
+		//add_action('admin_init', array(&$this, '_register_setting'));
 		
 		//add the js for the error handling before the form
 		add_action('impress-opts-page-before-form-'.$this->args['opt_name'], array(&$this, '_errors_js'), 1);

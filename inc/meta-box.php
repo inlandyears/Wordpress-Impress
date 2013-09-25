@@ -142,75 +142,6 @@ global $meta_boxes;
 
 $meta_boxes = array();
 
-// 2nd meta box
-$meta_boxes[] = array(
-	// Meta box id, UNIQUE per meta box. Optional since 4.1.5
-	'id' => 'impressscreen',
-
-	// Meta box title - Will appear at the drag and drop handle bar. Required.
-	'title' => 'Preview',
-
-	// Post types, accept custom post types as well - DEFAULT is array('post'). Optional.
-	'pages' => array( 'impress'),
-
-	// Where the meta box appear: normal (default), advanced, side. Optional.
-	'context' => 'normal',
-
-	// Order of meta box: high (default), low. Optional.
-	'priority' => 'high',
-
-	'fields' => array(
-		// SELECT BOX
-		// TEXTAREA
-		array(
-			'name' => 'Screen',
-			'desc' => '',
-			'id'   => "{$prefix}screen",
-			'type' => 'screen',
-			'cols' => '20',
-			'rows' => '3',
-		),
-	)
-);
-
-$pages = get_pages(); 
-foreach ( $pages as $page ) {
-	$arr[$page->post_name] = $page->post_title;
-}
-
-// 2nd meta box
-$meta_boxes[] = array(
-	// Meta box id, UNIQUE per meta box. Optional since 4.1.5
-	'id' => 'impresssettings',
-
-	// Meta box title - Will appear at the drag and drop handle bar. Required.
-	'title' => 'Settings',
-
-	// Post types, accept custom post types as well - DEFAULT is array('post'). Optional.
-	'pages' => array( 'impress'),
-
-	// Where the meta box appear: normal (default), advanced, side. Optional.
-	'context' => 'normal',
-
-	// Order of meta box: high (default), low. Optional.
-	'priority' => 'high',
-
-	'fields' => array(
-		// SELECT BOX
-		array(
-			'name'     => 'Select a Page',
-			'id'       => "{$prefix}selectpage",
-			'type'     => 'select',
-			// Array of 'value' => 'Label' pairs for select box
-			'options'  => $arr,
-			// Select multiple values, optional. Default is false.
-			'multiple' => false,
-		),
-	)
-);
-
-$meta_boxes = array();
-
 $webfonts_options = array();
 $webfonts =  get_google_webfonts_array(GOOGLE_API_KEY);
 foreach($webfonts->items as $cut){
@@ -222,12 +153,24 @@ foreach($webfonts->items as $cut){
 }
 
 
+/** get used pages **/
+$used_pages = array();
+global $wpdb;
+$meta_values = $wpdb->get_results( $wpdb->prepare("SELECT post_id,meta_value FROM $wpdb->postmeta WHERE meta_key = 'IMPRESS_pages_select'" ) );
+foreach($meta_values as $key=>$values) {
+    $used_pages[] = $values->meta_value;
+}
+
+$current_postid = $_GET['post'];
+$current_selected_page = get_post_meta($current_postid,'IMPRESS_pages_select',true);
+
 $pages = get_pages();
 $poptions = array();
 foreach($pages as $page) {
     // $options[2] = 'post_title';
     $pid = $page->ID;
-    $poptions[$pid] = $page->post_title;
+    if(!in_array($pid,$used_pages) || $pid == $current_selected_page)
+        $poptions[$pid] = $page->post_title;
 }
 
 

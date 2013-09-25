@@ -11,8 +11,8 @@
 <?php
 
 /** Get some Options via global */
-global $IMPRESS_Options;
-$y = $IMPRESS_Options;
+//global $IMPRESS_Options;
+//$y = $IMPRESS_Options;
 
 $effect = $impress_page_options['IMPRESS_effect'][0];
 
@@ -52,7 +52,11 @@ foreach($slides as $key=>$slide) {
 
         $slug = basename(get_permalink());
         //$slides = get_post_meta( $_id, 'IMPRESS_slide', false );
-        $slideclass = $slide['custom_class'];// get_post_meta( $_id, 'IMPRESS_class', true );
+
+        $slideclass = $impress_page_options['IMPRESS_class'][0];
+        if( $slide['custom_class'] != '')
+            $slideclass = $slide['custom_class'];
+
         $override =  $slide['override']; //get_post_meta( $_id, 'IMPRESS_override', true );
         $showtitle = $impress_page_options['IMPRESS_title'][0];
         $custom_title = $slide['content_title']; // get_post_meta( $_id, 'IMPRESS_title', true );

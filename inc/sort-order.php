@@ -6,7 +6,7 @@
 
 
 /** Lets add the function for the new submenu */
-add_action( 'admin_menu', 'impress_register_order_menu' );
+//add_action( 'admin_menu', 'impress_register_order_menu' );
 
 /** Array for submenu and target function */
 function impress_register_order_menu() {
