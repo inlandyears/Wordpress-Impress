@@ -154,12 +154,14 @@ foreach($webfonts->items as $cut){
 
 
 /** get used pages **/
+/*
 $used_pages = array();
 global $wpdb;
 $meta_values = $wpdb->get_results( $wpdb->prepare("SELECT post_id,meta_value FROM $wpdb->postmeta WHERE meta_key = 'IMPRESS_pages_select'" ) );
 foreach($meta_values as $key=>$values) {
     $used_pages[] = $values->meta_value;
 }
+
 
 $current_postid = $_GET['post'];
 $current_selected_page = get_post_meta($current_postid,'IMPRESS_pages_select',true);
@@ -172,7 +174,7 @@ foreach($pages as $page) {
     if(!in_array($pid,$used_pages) || $pid == $current_selected_page)
         $poptions[$pid] = $page->post_title;
 }
-
+*/
 
 $meta_boxes[] = array(
     // Meta box id, UNIQUE per meta box. Optional since 4.1.5
@@ -196,7 +198,7 @@ $meta_boxes[] = array(
 
 
         array( 'type'  => 'screen'),
-
+/*
         array(
             'name'     => 'Select Page',
             'id'       => "{$prefix}pages_select",
@@ -206,7 +208,7 @@ $meta_boxes[] = array(
             'options'  => $poptions
 
         ),
-
+*/
         array(
             'name'     => 'Type Color',
             'id'       => "{$prefix}type_color",
@@ -242,6 +244,7 @@ $meta_boxes[] = array(
 
         ),
         array( 'type'     => 'divider'),
+       /*
         array(
             'name'     => 'Select Effect',
             'id'       => "{$prefix}effect",
@@ -251,7 +254,7 @@ $meta_boxes[] = array(
             'options'   => array(   "none"=>"None","bokeh"=>"Bokeh","plaid"=>"Plaid","boxes"=>"Boxes","hexagons"=>"Hexagons","stars"=>"Stars","star-color"=>"Stars Color")
 
         ),
-
+       */
         array(
             'name'     => 'Choose Typeface',
             'id'       => "{$prefix}typeface",
@@ -325,7 +328,7 @@ $meta_boxes[] = array(
             'name' => 'X Position',
             'id'   => "{$prefix}xpos",
             'type' => 'number',
-            'std'  => 0,
+            'std'  => 1000,
             'min'  => -200000,
             'step' => 1000,
         ),
@@ -393,6 +396,8 @@ $meta_boxes[] = array(
         ),
     ),
 );
+
+
 
 
 $meta_boxes[] = array(

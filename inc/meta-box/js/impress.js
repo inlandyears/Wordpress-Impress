@@ -1,5 +1,5 @@
 jQuery(document).ready( function( $ ) {
-
+/*
     $('.upload_image_button').click(function() {
       //  var iid = '#' + this.id.substring(0, this.id.length - 7);
         formfield = $(this).prev().attr('name');
@@ -14,5 +14,5 @@ jQuery(document).ready( function( $ ) {
         $(prev).val(imgurl);
         tb_remove();
     }
-
+*/
 });

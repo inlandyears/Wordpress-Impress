@@ -14,7 +14,7 @@
 //global $IMPRESS_Options;
 //$y = $IMPRESS_Options;
 
-$effect = $impress_page_options['IMPRESS_effect'][0];
+//$effect = $impress_page_options['IMPRESS_effect'][0];
 
 
 
@@ -124,6 +124,7 @@ foreach($slides as $key=>$slide) {
 $slideclass = '';
 
 /** Load the background */
+/*
 if($effect != 'none') {
     switch($effect) {
         case 'bokeh':
@@ -156,6 +157,6 @@ if($effect != 'none') {
         $idx++;
     }
 }
-
+*/
     ?>
 </div>

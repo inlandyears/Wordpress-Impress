@@ -79,8 +79,8 @@ if ( !class_exists( 'RWMB_Wysiwyg_Field' ) )
 
 				// Use new wp_editor() since WP 3.3
 				wp_editor( $meta, $field['id'], $field['options'] );
-
-				return ob_get_clean();
+                $x = ob_get_clean();
+				return $x;
 			}
 		}
 

@@ -53,7 +53,7 @@ if ( ! class_exists( 'RWMB_Impress_Field' ) )
             $html .= '<div style="clear:both"></div>';
 
             $html .= '<label>Content</label>';
-            $html .= RWMB_Textarea_Field::html($html, $meta['content'], self::refactor_field( $field, 'content' ));
+            $html .= RWMB_Wysiwyg_Field::html($html, $meta['content'], self::refactor_field( $field, 'content' ));
             $html .= '<div style="clear:both"></div>';
 
             $html .= '<label>Custom Class</label>';
@@ -114,8 +114,11 @@ if ( ! class_exists( 'RWMB_Impress_Field' ) )
 
         static function refactor_field( $field,$variable_name )
         {
+            $pattern = '/(.*)\[(.*)\]/';
+            preg_match($pattern, $field['field_name'], $matches);
+            $match = $matches[2];
             $field['field_name'] .= "[$variable_name]";
-            $field['id'] .= "[$variable_name]";
+            $field['id'] .= "[$match][$variable_name]";
             return $field;
         }
 
