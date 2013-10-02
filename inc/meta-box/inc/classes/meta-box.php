@@ -150,6 +150,12 @@ if ( ! class_exists( 'RW_Meta_Box' ) )
 			}
 		}
 
+        function custom_sort($a,$b) {
+            return $a['sort']>$b['sort'];
+        }
+
+
+
 		/**
 		 * Callback function to show fields in meta box
 		 *
@@ -199,6 +205,16 @@ if ( ! class_exists( 'RW_Meta_Box' ) )
 					$meta = (array) $meta;
 
 					$field_html = '';
+
+                    if(isset($meta[0]) && isset($meta[0]['sort'])) {
+                        usort($meta, array($this, 'custom_sort'));
+                        $c = 0;
+                        foreach ( $meta as $index=>$meta_data ) {
+                            $meta_data['sort'] = $c;
+                            $c++;
+                            $meta[$index] = $meta_data;
+                        }
+                    }
 
 					foreach ( $meta as $index => $meta_data )
 					{
@@ -362,7 +378,7 @@ if ( ! class_exists( 'RW_Meta_Box' ) )
 		 */
 		static function add_clone_buttons( $html, $field, $meta_data )
 		{
-			$button = '<a href="#" class="rwmb-button button remove-clone">' . __( '&#8211;', 'rwmb' ) . '</a>';
+			$button = '<a href="#" class="rwmb-button button remove-clone">' . __( '&#8211;', 'rwmb' ) . '</a><div style="clear:both"></div>';
 
 			return "{$html}{$button}";
 		}

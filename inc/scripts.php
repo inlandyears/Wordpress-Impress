@@ -30,6 +30,7 @@ function impress_enqueue_style() {
 function impress_enqueue_scripts() {
 	wp_enqueue_script( 'impress_js', IMPRESS_JS_URL . 'vendor/impress.js', array( 'jquery' ), IMPRESS_VER, true );
 	wp_enqueue_script( 'wp_impress_js', IMPRESS_JS_URL . 'wp_impress.js', array( 'impress_js' ), IMPRESS_VER, true );
+
 }
 
 
@@ -43,6 +44,7 @@ function impress_enqueue_scripts() {
 function impress_admin_enqueue_scripts() {
   wp_enqueue_script( 'jquery-ui-sortable' );
   wp_enqueue_script( 'impress-admin-scripts', IMPRESS_JS_URL . 'sort-order.js' );
+    wp_enqueue_script('jquery-ui-accordion');
 }
 
 add_action( 'admin_enqueue_scripts', 'impress_admin_enqueue_scripts' );

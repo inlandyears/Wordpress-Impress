@@ -44,6 +44,17 @@ $slides = unserialize( $encoded_slides );
 //$loop = new WP_Query( $args );
 
 
+// Define the custom sort function
+function custom_sort($a,$b) {
+    return $a['sort']>$b['sort'];
+}
+// Sort the multidimensional array
+usort($slides, "custom_sort");
+
+
+
+
+
 foreach($slides as $key=>$slide) {
 
         $_id = get_the_ID();

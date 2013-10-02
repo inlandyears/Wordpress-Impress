@@ -48,6 +48,10 @@ if ( ! class_exists( 'RWMB_Impress_Field' ) )
            // $html .= RWMB_Text_Field::html($html, $meta['first'], $temp_field);
 */
 
+            $html .= '<label>Sort</label>';
+            $html .= RWMB_Number_Field::html($html, $meta['sort'], self::refactor_field( $field, 'sort' ));
+            $html .= '<div style="clear:both"></div>';
+
             $html .= '<label>Title</label>';
             $html .= RWMB_Text_Field::html($html, $meta['content_title'], self::refactor_field( $field, 'content_title' ));
             $html .= '<div style="clear:both"></div>';
@@ -104,7 +108,7 @@ if ( ! class_exists( 'RWMB_Impress_Field' ) )
             $html .= '<label>Z Rotate</label>';
             $html .= RWMB_Number_Field::html($html, $meta['zrotate'], self::refactor_field( $field, 'zrotate' ));
             $html .= '<div style="clear:both"></div>';
-            $html .= '<hr>';
+           // $html .= '<hr>';
 
 
             return $html;

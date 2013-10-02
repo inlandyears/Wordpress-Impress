@@ -1,6 +1,112 @@
 jQuery( document ).ready( function( $ )
 {
 	toggle_remove_buttons();
+    /*
+    $( "#impressslide .rwmb-clone" ).each(function(i,e){
+        var title;
+        $input = $(e).find( '*' );
+        for (var i = 0; i < $input.length; ++i) {
+            // Get the field name, and increment
+            if( $($input[i]).attr( 'id' ) ) {
+                var name = $($input[i]).attr( 'id' ).replace( /IMPRESS_slide\[(\d+)\]\[content_title\]/, function( match, p1 )
+                {
+                    title = $input[i].value;
+                    return '';
+                } );
+            }
+        }
+        $(e).before('<h3>'+title+'</h3>');
+    });
+    */
+    $( "#impressslide .rwmb-clone" ).prepend('<div class="handle" style="border:1px solid #aaa;">MOVE</MOVE></div>');
+   // jQuery( "#impressslide .rwmb-input" ).accordion({header: "> .rwmb-clone > div.handle" });
+    $( "#impressslide .rwmb-input" ).sortable({
+       // handle: "h3",
+        start: function(e, ui){
+          //  $('textarea',ui.item).each(function(i){
+             $(this).find('.wp-editor-area').each(function(i,e){
+              //  console.log ('start '+i + ' ' + e.id);
+                tinyMCE.execCommand( 'mceRemoveControl', false, e.id);
+
+            });
+        },
+        stop: function(e,ui) {
+           // $('textarea',ui.item).each(function(){
+          //  sortSlides();
+            $(this).find('.wp-editor-area').each(function(i,e){
+              //  console.log ('stop '+ e.id);
+
+              //  console.log ('stop ' +e.id);
+                tinyMCE.execCommand( 'mceAddControl', true, e.id );
+                if( $($(ui.item[0]).find('.wp-editor-wrap')[0]).hasClass('html-active') ) {
+                    $($(ui.item[0]).find('.switch-html')[0]).trigger('click');
+                }
+               // $(this).sortable("refresh");
+
+               // tinymce.get(e.id ).setContent('test');
+
+
+            });
+            var c = 0;
+            $(this).find('.rwmb-number').each(function(i,e){
+             //  console.log( $(e).attr( 'name').indexOf("][sort]"));
+                if( $(e).attr( 'name').indexOf("][sort]") != -1) {
+                    $(e).val(c);
+                    c++;
+                }
+            });
+
+        }
+
+    });
+
+    function sortSlides() {
+
+        var slides = $('#impressslide .rwmb-clone');
+        for (var s = 0; s < slides.length; ++s) {
+
+            $input = $(slides[s]).find( '*' );
+            for (var i = 0; i < $input.length; ++i) {
+                // Get the field name, and increment
+                if( $($input[i]).attr( 'name' ) ) {
+                    var name = $($input[i]).attr( 'name' ).replace( /IMPRESS_slide\[(\d+)\]/, function( match, p1 )
+                    {
+                        //next_id =  parseInt( p1 ) + 1;
+                        return 'IMPRESS_slide[' + s + ']';
+                    } );
+
+                    // Update the "name" attribute
+                    $($input[i]).attr( 'name', name );
+                }
+
+                if( $($input[i]).attr( 'id' ) ) {
+                    var name = $($input[i]).attr( 'id' ).replace( /IMPRESS_slide\[(\d+)\]/, function( match, p1 )
+                    {
+                        return 'IMPRESS_slide[' + s + ']';
+                    } );
+
+                    // Update the "name" attribute
+                    $($input[i]).attr( 'id', name );
+                }
+/*
+                if( $($input[i]).attr( 'class' ) ) {
+                    var name = $($input[i]).attr( 'class' ).replace( /IMPRESS_slide\[(\d+)\]/, function( match, p1 )
+                    {
+                        return 'IMPRESS_slide[' + s + ']';
+                    } );
+
+                    // Update the "name" attribute
+                    $($input[i]).attr( 'class', name );
+                }
+*/
+
+            }
+
+
+        }
+    }
+
+
 
 	function add_cloned_fields( $input )
 	{
