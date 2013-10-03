@@ -18,10 +18,10 @@ jQuery( document ).ready( function( $ )
         $(e).before('<h3>'+title+'</h3>');
     });
     */
-    $( "#impressslide .rwmb-clone" ).prepend('<div class="handle" style="border:1px solid #aaa;">MOVE</MOVE></div>');
+    $( "#impressslide .rwmb-clone" ).prepend('<div class="handle" style="border:1px solid #aaa;cursor: move">MOVE</MOVE></div>');
    // jQuery( "#impressslide .rwmb-input" ).accordion({header: "> .rwmb-clone > div.handle" });
     $( "#impressslide .rwmb-input" ).sortable({
-       // handle: "h3",
+        handle: ".handle",
         start: function(e, ui){
           //  $('textarea',ui.item).each(function(i){
              $(this).find('.wp-editor-area').each(function(i,e){
